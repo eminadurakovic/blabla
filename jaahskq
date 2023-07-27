@@ -153,3 +153,315 @@ const ProfileOverview: React.FC = () => {
 export default ProfileOverview;
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+import { ring } from "@chakra-ui/system";
+import Banner from "./components/Banner";
+import alexander_brückl from "assets/avatars/alexander_brückl.jpg";
+import andreas_schmidinger from "assets/avatars/andreas_schmidinger.jpg";
+import christian_gutenbrunner from "assets/avatars/christian_gutenbrunner.jpg";
+import christian_pötzl from "assets/avatars/christian_pötzl.jpg";
+import christian_rammelmüller from "assets/avatars/christian_rammelmüller.jpg";
+import christoph_kaineder from "assets/avatars/christoph_kaineder.jpg";
+import david_pühringer from "assets/avatars/david_pühringer.jpg";
+import dominik_karl from "assets/avatars/dominik_karl.jpg";
+import enes_durakovic from "assets/avatars/enes_durakovic.jpg";
+import florian_friesenecker from "assets/avatars/florian_friesenecker.jpg";
+import florian_leistner from "assets/avatars/florian_leistner.jpg";
+import florian_obermayr from "assets/avatars/florian_obermayr.jpg";
+import franz_gahleitner from "assets/avatars/franz_gahleitner.jpg";
+import günther_barth from "assets/avatars/günther_barth.jpg";
+import johanna_donabauer from "assets/avatars/johanna_donabauer.jpg";
+import manfred_möslinger from "assets/avatars/manfred_möslinger.jpg";
+import michael_traxler from "assets/avatars/michael_traxler.jpg";
+import michael_tröls from "assets/avatars/michael_tröls.jpg";
+import patrick_feichtinger from "assets/avatars/patrick_feichtinger.jpg";
+import petra_scharf_buchgeher from "assets/avatars/petra_scharf_buchgeher.jpg";
+import philipp_lanzerstorfer from "assets/avatars/philipp_lanzerstorfer.jpg";
+import ronald_wurm from "assets/avatars/ronald_wurm.jpg";
+import simon_falkner from "assets/avatars/simon_falkner.jpg";
+import thomas_hofer from "assets/avatars/thomas_hofer.jpg";
+import thomas_mitter from "assets/avatars/thomas_mitter.jpg";
+import werner_hopfner from "assets/avatars/werner_hopfner.jpg";
+import react from "react";
+import routes2 from "routes2";
+import routes from "routes";
+import Links from "/Candy-Tracker/src/components/sidebar/components/Links";
+import { Routes, Route, Navigate, useLocation } from "react-router-dom";
+import { Link } from "react-router-dom";
+import userManager from "./UserManager";
+
+const ProfileOverview: React.FC = () => {
+  return (
+    <div style={{ display: "flex", flexFlow: "wrap row", padding: "2em" }}>
+      {/* Loop through the routes and display banners with links */}
+      {routes.map((route, index) => {
+        const curr_user = userManager.getUser(index);
+        // You can conditionally render the banners based on the layout or other conditions if needed
+        if (route.layout === "/admin") {
+          return (
+            <div
+              style={{
+                display: "grid",
+                gridTemplateColumns: "auto auto",
+                margin: "2em",
+                width: "2em",
+                marginRight: "18em",
+                cursor: "pointer", // Add cursor style to indicate clickable element
+              }}
+              key={index}
+            >
+              {/* Wrap the div with Link to create a clickable link */}
+              <Link to={`${route.layout}/${route.path}`}>
+                <div className="">
+                  <Banner name={route.name} avatar={manfred_möslinger} />
+                </div>
+              </Link>
+            </div>
+          );
+        } else {
+          return null;
+        }
+      })}
+    </div>
+  );
+};
+
+export default ProfileOverview;
+
+/*
+const getRoutes = (routes: RoutesType[]): any => {
+  return routes.map((prop, key) => {
+    if (prop.layout === "/admin") {
+      return (
+        <Route path={`/${prop.path}`} element={prop.component} key={key} />
+      );
+    } else {
+      return null;
+    }
+  });
+};
+
+const createLinks = (routes: RoutesType[]) => {
+  return routes.map((route, index) => {
+    if (
+      route.layout === "/admin" ||
+      route.layout === "/auth" ||
+      route.layout === "/rtl"
+    ) {
+      return (
+        <Link key={index} to={route.layout + "/" + route.path}>
+          <div className="relative mb-3 flex hover:cursor-pointer">
+            <li
+              className="my-[3px] flex cursor-pointer items-center px-8"
+              key={index}
+            >
+              <p>
+                {route.name}
+              </p>
+            </li>
+          </div>
+        </Link>
+      );
+    }
+  });
+};
+
+const ProfileOverview = () => {
+  /*
+  const navigate = useNavigate();
+
+  const handleDivClick = () => {
+    navigate("src/views/admin/profile/people/alexander_brückl");
+  }
+
+  return (
+    // <div style={{display: 'flex', flexFlow:'wrap'}}>
+    <div style={{display: 'flex', flexFlow:'wrap row', padding:'2em'}}>
+
+      
+
+
+      <div style={{display: 'grid', gridTemplateColumns: 'auto auto', margin:'2em', width:'2em', marginRight:'18em'}}>
+        <div className="">
+        <Banner name="Alexander Brückl" avatar={alexander_brückl}/>
+        </div>
+      </div>
+
+      <div style={{display: 'grid', gridTemplateColumns: 'auto auto', margin:'2em', width:'2em', marginRight:'18em'}}>
+        <div className="">
+        <Banner name="Andreas Schmidinger" avatar={andreas_schmidinger}/>
+        </div>
+      </div>
+
+      <div style={{display: 'grid', gridTemplateColumns: 'auto auto', margin:'2em', width:'2em', marginRight:'18em'}}>
+        <div className="">
+        <Banner name="Christian Gutenbrunner" avatar={christian_gutenbrunner}/>
+        </div>
+      </div>
+
+      <div style={{display: 'grid', gridTemplateColumns: 'auto auto', margin:'2em', width:'2em', marginRight:'18em'}}>
+        <div className="">
+        <Banner name="Christian Pötzl" avatar={christian_pötzl}/>
+        </div>
+      </div>
+
+      <div style={{display: 'grid', gridTemplateColumns: 'auto auto', margin:'2em', width:'2em', marginRight:'18em'}}>
+        <div className="">
+        <Banner name="Christian Rammelmüller" avatar={christian_rammelmüller}/>
+        </div>
+      </div>
+
+      <div style={{display: 'grid', gridTemplateColumns: 'auto auto', margin:'2em', width:'2em', marginRight:'18em'}}>
+        <div className="">
+        <Banner name="Christoph Kaineder" avatar={christoph_kaineder}/>
+      </div>
+      </div>
+
+      <div style={{display: 'grid', gridTemplateColumns: 'auto auto', margin:'2em', width:'2em', marginRight:'18em'}}>
+        <div className="">
+        <Banner name="David Pühringer" avatar={david_pühringer}/>
+        </div>
+      </div>
+
+      <div style={{display: 'grid', gridTemplateColumns: 'auto auto', margin:'2em', width:'2em', marginRight:'18em'}}>
+        <div className="">
+        <Banner name="Dominik Karl" avatar={dominik_karl}/>
+        </div>
+      </div>
+
+      <div style={{display: 'grid', gridTemplateColumns: 'auto auto', margin:'2em', width:'2em', marginRight:'18em'}}>
+        <div className="">
+        <Banner name="Enes Durakovic" avatar={enes_durakovic}/>
+        </div>
+      </div>
+
+      <div style={{display: 'grid', gridTemplateColumns: 'auto auto', margin:'2em', width:'2em', marginRight:'18em'}}>
+        <div className="">
+          <Banner name="Florian Friesenecker" avatar={florian_friesenecker}/>
+        </div>
+      </div>
+
+      <div style={{display: 'grid', gridTemplateColumns: 'auto auto', margin:'2em', width:'2em', marginRight:'18em'}}>
+        <div className="">
+        <Banner name="Florian Leistner" avatar={florian_leistner}/>
+        </div>
+      </div>
+
+      <div style={{display: 'grid', gridTemplateColumns: 'auto auto', margin:'2em', width:'2em', marginRight:'18em'}}>
+        <div className="items-center justify-center">
+        <Banner name="Florian Obermayr" avatar={florian_obermayr}/>
+        </div>
+      </div>
+
+      <div style={{display: 'grid', gridTemplateColumns: 'auto auto', margin:'2em', width:'2em', marginRight:'18em'}}>
+        <div className="">
+        <Banner name="Franz Gahleitner" avatar={franz_gahleitner}/>
+        </div>
+      </div>
+
+      <div style={{display: 'grid', gridTemplateColumns: 'auto auto', margin:'2em', width:'2em', marginRight:'18em'}}>
+        <div className="">
+        <Banner name="Günther Barth" avatar={günther_barth}/>
+        </div>
+      </div>
+
+      <div style={{display: 'grid', gridTemplateColumns: 'auto auto', margin:'2em', width:'2em', marginRight:'18em'}}>
+        <div className=''>
+          <Banner name="Johanna Donabauer" avatar={johanna_donabauer}/>
+        </div>
+      </div>
+
+      <div style={{display: 'grid', gridTemplateColumns: 'auto auto', margin:'2em', width:'2em', marginRight:'18em'}}>
+        <div className="">
+        <Banner name="Manfred Möslinger" avatar={manfred_möslinger}/>
+        </div>
+      </div>
+
+      <div style={{display: 'grid', gridTemplateColumns: 'auto auto', margin:'2em', width:'2em', marginRight:'18em'}}>
+        <div className="">
+        <Banner name="Michael Traxler" avatar={michael_traxler}/>
+        </div>
+      </div>
+
+      <div style={{display: 'grid', gridTemplateColumns: 'auto auto', margin:'2em', width:'2em', marginRight:'18em'}}>
+        <div className="">
+        <Banner name="Michael Tröls" avatar={michael_tröls}/>
+        </div>
+      </div>
+
+      <div style={{display: 'grid', gridTemplateColumns: 'auto auto', margin:'2em', width:'2em', marginRight:'18em'}}>
+        <div className="">
+          <Banner name="Patrick Feichtinger" avatar={patrick_feichtinger}/>
+        </div>
+      </div>
+
+      <div style={{display: 'grid', gridTemplateColumns: 'auto auto', margin:'2em', width:'2em', marginRight:'18em'}}>
+        <div className="">
+        <Banner name="Petra Buchgeher Scharf" avatar={petra_scharf_buchgeher}/>
+        </div>
+      </div>
+
+      <div style={{display: 'grid', gridTemplateColumns: 'auto auto', margin:'2em', width:'2em', marginRight:'18em'}}>
+        <div className="">
+        <Banner name="Philipp Lanzerstorfer" avatar={philipp_lanzerstorfer}/>
+        </div>
+      </div>
+
+      <div style={{display: 'grid', gridTemplateColumns: 'auto auto', margin:'2em', width:'2em', marginRight:'18em'}}>
+        <div className="">
+        <Banner name="Ronald Wurm" avatar={ronald_wurm}/>
+        </div>
+      </div>
+
+      <div style={{display: 'grid', gridTemplateColumns: 'auto auto', margin:'2em', width:'2em', marginRight:'18em'}}>
+        <div className="">
+        <Banner name="Simon Falkner" avatar={simon_falkner}/>
+        </div>
+      </div>
+
+      <div style={{display: 'grid', gridTemplateColumns: 'auto auto', margin:'2em', width:'2em', marginRight:'18em'}}>
+        <div className="">
+        <Banner name="Thomas Hofer" avatar={thomas_hofer}/>
+        </div>
+      </div>
+
+      <div style={{display: 'grid', gridTemplateColumns: 'auto auto', margin:'2em', width:'2em', marginRight:'18em'}}>
+        <div className="">
+        <Banner name="Thomas Mitter" avatar={thomas_mitter}/>
+        </div>
+      </div>
+
+      <div style={{display: 'grid', gridTemplateColumns: 'auto auto', margin:'2em', width:'2em', marginRight:'18em', alignContent:'center'}}>
+        <div className=''>
+          <Banner name="Werner Hopfner" avatar={werner_hopfner}/>
+        </div>
+      </div>
+      
+    </div>
+  );
+  };
+
+export default ProfileOverview;
+*/
