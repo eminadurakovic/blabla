@@ -1,0 +1,155 @@
+import React from "react";
+import { Link, useLocation } from "react-router-dom";
+import DashIcon from "components/icons/DashIcon";
+import { RoutesType } from "./types"; // Import the RoutesType interface
+
+interface Props {
+  routes: RoutesType[];
+}
+
+export const SidebarLinks: React.FC<Props> = (props) => {
+  let location = useLocation();
+
+  const { routes } = props;
+
+  // verifies if routeName is the one active (in browser input)
+  const activeRoute = (routeName: string) => {
+    return location.pathname.includes(routeName);
+  };
+
+  const createLinks = (routes: RoutesType[]) => {
+    const linksArray: JSX.Element[] = [];
+    routes.forEach((route, index) => {
+      if (
+        route.layout === "/admin" ||
+        route.layout === "/auth" ||
+        route.layout === "/rtl"
+      ) {
+        const link = (
+          <Link key={index} to={route.layout + "/" + route.path}>
+            <div className="relative mb-3 flex hover:cursor-pointer">
+              <li
+                className="my-[3px] flex cursor-pointer items-center px-8"
+                key={index}
+              >
+                <p
+                  className={`leading-1 ml-4 flex ${
+                    activeRoute(route.path) === true
+                      ? "font-bold text-navy-700 dark:text-white"
+                      : "font-medium text-gray-600"
+                  }`}
+                >
+                  {route.name}
+                </p>
+              </li>
+              {activeRoute(route.path) ? (
+                <div className="absolute right-0 top-px h-9 w-1 rounded-lg bg-brand-500 dark:bg-brand-400" />
+              ) : null}
+            </div>
+          </Link>
+        );
+        linksArray.push(link);
+      }
+    });
+    return linksArray;
+  };
+
+  const links = createLinks(routes);
+
+  return (
+    <div>
+      {links.map((link, index) => (
+        <div key={index}>{link}</div>
+      ))}
+    </div>
+  );
+};
+
+export default SidebarLinks;
+
+
+import React from "react";
+import Banner from "./components/Banner";
+import { RoutesType } from "./types"; // Import the RoutesType interface
+import routes from "./routes"; // Import the routes containing the route information
+
+const ProfileOverview: React.FC = () => {
+  return (
+    <div style={{ display: "flex", flexFlow: "wrap row", padding: "2em" }}>
+      {/* Loop through the routes and display banners */}
+      {routes.map((route, index) => {
+        // You can conditionally render the banners based on the layout or other conditions if needed
+        if (route.layout === "/admin") {
+          return (
+            <div
+              style={{
+                display: "grid",
+                gridTemplateColumns: "auto auto",
+                margin: "2em",
+                width: "2em",
+                marginRight: "18em",
+              }}
+              key={index}
+            >
+              <div className="">
+                <Banner name={route.name} avatar={/* Pass the avatar here */} />
+              </div>
+            </div>
+          );
+        } else {
+          return null;
+        }
+      })}
+    </div>
+  );
+};
+
+export default ProfileOverview;
+
+
+
+
+import React from "react";
+import Banner from "./components/Banner";
+import { Link } from "react-router-dom";
+import { RoutesType } from "./types";
+import routes from "./routes";
+
+const ProfileOverview: React.FC = () => {
+  return (
+    <div style={{ display: "flex", flexFlow: "wrap row", padding: "2em" }}>
+      {/* Loop through the routes and display banners with links */}
+      {routes.map((route, index) => {
+        // You can conditionally render the banners based on the layout or other conditions if needed
+        if (route.layout === "/admin") {
+          return (
+            <div
+              style={{
+                display: "grid",
+                gridTemplateColumns: "auto auto",
+                margin: "2em",
+                width: "2em",
+                marginRight: "18em",
+                cursor: "pointer", // Add cursor style to indicate clickable element
+              }}
+              key={index}
+            >
+              {/* Wrap the div with Link to create a clickable link */}
+              <Link to={`${route.layout}/${route.path}`}>
+                <div className="">
+                  <Banner name={route.name} avatar={/* Pass the avatar here */} />
+                </div>
+              </Link>
+            </div>
+          );
+        } else {
+          return null;
+        }
+      })}
+    </div>
+  );
+};
+
+export default ProfileOverview;
+
+
